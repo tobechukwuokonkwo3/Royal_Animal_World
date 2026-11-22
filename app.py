@@ -292,11 +292,10 @@ def create_staff_accounts():
     print("✅ 10 staff accounts ready")
 
 
+# Create tables and staff accounts when the app starts
+with app.app_context():
+    db.create_all()
+    create_staff_accounts()
+
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-        create_staff_accounts()
-    print("\n🚀 Royal Animal World is running")
-    print("Open: http://127.0.0.1:5000")
-    print("Staff login: http://127.0.0.1:5000/staff/login\n")
     app.run(debug=True, host='0.0.0.0', port=5000)
