@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Patients{% endblock %}
+{% block content %}
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+    <h1>Patient Records</h1>
+    <a href="{{ url_for('new_patient') }}" class="btn btn-primary">+ New Patient</a>
+</div>
+
+{% if patients %}
+<table>
+    <tr>
+        <th>Pet Name</th>
+        <th>Breed</th>
+        <th>Owner</th>
+        <th>Phone</th>
+        <th>Last Updated</th>
+        <th></th>
+    </tr>
+    {% for p in patients %}
+    <tr>
+        <td>{{ p.pet_name }}</td>
+        <td>{{ p.breed or '-' }}</td>
+        <td>{{ p.owner_name }}</td>
+        <td>{{ p.owner_phone or '-' }}</td>
+        <td>{{ p.updated_at.strftime('%d %b %Y') if p.updated_at else '-' }}</td>
+        <td><a href="{{ url_for('edit_patient', id=p.id) }}">View / Edit</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p style="color: var(--muted);">No patient records yet. Create the first one.</p>
+{% endif %}
+{% endblock %}

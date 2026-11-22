@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit' if patient else 'New' }} Patient{% endblock %}
+{% block content %}
+<h1>{{ 'Edit Patient' if patient else 'New Patient Record' }}</h1>
+
+<form method="POST" enctype="multipart/form-data" class="card">
+    <div class="grid-2">
+        <div>
+            <label>Pet Name *</label>
+            <input type="text" name="pet_name" value="{{ patient.pet_name if patient else '' }}" required>
+        </div>
+        <div>
+            <label>Species / Breed</label>
+            <input type="text" name="breed" value="{{ patient.breed if patient else '' }}">
+        </div>
+        <div>
+            <label>Owner Name *</label>
+            <input type="text" name="owner_name" value="{{ patient.owner_name if patient else '' }}" required>
+        </div>
+        <div>
+            <label>Owner Phone</label>
+            <input type="text" name="owner_phone" value="{{ patient.owner_phone if patient else '' }}">
+        </div>
+        <div>
+            <label>Age</label>
+            <input type="text" name="age" value="{{ patient.age if patient else '' }}" placeholder="e.g. 4 years">
+        </div>
+        <div>
+            <label>Weight (kg)</label>
+            <input type="number" step="0.1" name="weight" value="{{ patient.weight if patient else '' }}">
+        </div>
+    </div>
+
+    <label>Chief Complaint</label>
+    <input type="text" name="complaint" value="{{ patient.complaint if patient else '' }}">
+
+    <label>Clinical Notes</label>
+    <textarea name="clinical_notes" rows="5">{{ patient.clinical_notes if patient else '' }}</textarea>
+
+    <div class="grid-2">
+        <div>
+            <label>Vaccination Status</label>
+            <select name="vacc_status">
+                <option value="Yes" {% if patient and patient.vacc_status == 'Yes' %}selected{% endif %}>Yes</option>
+                <option value="No" {% if patient and patient.vacc_status == 'No' %}selected{% endif %}>No</option>
+                <option value="Partial" {% if patient and patient.vacc_status == 'Partial' %}selected{% endif %}>Partial</option>
+                <option value="Unknown" {% if not patient or patient.vacc_status == 'Unknown' %}selected{% endif %}>Unknown</option>
+            </select>
+        </div>
+        <div>
+            <label>Next Appointment</label>
+            <input type="date" name="next_appt" value="{{ patient.next_appt if patient else '' }}">
+        </div>
+    </div>
+
+    <label>Upload Medical Files (PDF, Images, X-Rays)</label>
+    <input type="file" name="medical_files" multiple accept=".pdf,.jpg,.jpeg,.png,.dcm">
+
+    {% if patient and patient.files %}
+    <div style="margin: 1rem 0;">
+        <strong>Existing Files:</strong>
+        <ul style="margin-top: 0.5rem; color: var(--muted);">
+            {% for f in patient.files %}
+            <li><a href="{{ url_for('uploaded_file', filename=f.filename) }}" target="_blank">{{ f.original_name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Save Record</button>
+    <a href="{{ url_for('staff_patients') }}" class="btn" style="margin-left: 0.5rem;">Cancel</a>
+</form>
+{% endblock %}

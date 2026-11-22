@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Add Product{% endblock %}
+{% block content %}
+<h1>Add New Product</h1>
+
+<form method="POST" enctype="multipart/form-data" class="card">
+    <label>Product Name *</label>
+    <input type="text" name="name" required>
+
+    <label>Description</label>
+    <textarea name="description" rows="3"></textarea>
+
+    <div class="grid-2">
+        <div>
+            <label>Price (₦) *</label>
+            <input type="number" step="0.01" name="price" required>
+        </div>
+        <div>
+            <label>Stock Quantity</label>
+            <input type="number" name="stock" value="0">
+        </div>
+    </div>
+
+    <label>Category</label>
+    <input type="text" name="category" placeholder="e.g. Medicine, Food, Accessories" value="General">
+
+    <label>Product Image</label>
+    <input type="file" name="image" accept="image/*">
+
+    <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Save Product</button>
+    <a href="{{ url_for('staff_products') }}" class="btn" style="margin-left: 0.5rem;">Cancel</a>
+</form>
+{% endblock %}
