@@ -6,7 +6,7 @@ from werkzeug.utils import secure_filename
 from datetime import datetime
 import os
 
-app = Flask(__name__)
+app = app = Flask(__name__, template_folder='.')
 app.config['SECRET_KEY'] = 'royal-animal-world-secret-change-this-in-production'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///royal.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
