@@ -291,7 +291,53 @@ def create_staff_accounts():
     db.session.commit()
     print("✅ 10 staff accounts ready")
 
+@app.route('/staff/change-password', methods=['GET', 'POST'])
+@login_required
+def change_password():
+    if request.method == 'POST':
+        current = request.form.get('current_password')
+        new_pass = request.form.get('new_password')
+        confirm = request.form.get('confirm_password')
 
+        if not current_user.check_password(current):
+            flash('Current password is wrong', 'danger')
+        elif new_pass != confirm:
+            flash('New passwords do not match', 'danger')
+        elif len(new_pass) < 6:
+            flash('Password must be at least 6 characters', 'danger')
+        else:
+            current_user.set_password(new_pass)
+            db.session.commit()
+            flash('Password changed successfully!', 'success')
+            return redirect(url_for('staff_dashboard'))
+
+    return render_template('change_password.html')
+
+
+@app.route('/staff/create-staff', methods=['GET', 'POST'])
+@login_required
+def create_staff():
+    if current_user.role != 'Admin':
+        flash('Only Admin can create staff accounts', 'danger')
+        return redirect(url_for('staff_dashboard'))
+
+    if request.method == 'POST':
+        username = request.form.get('username').strip()
+        full_name = request.form.get('full_name').strip()
+        role = request.form.get('role')
+        password = request.form.get('password')
+
+        if Staff.query.filter_by(username=username).first():
+            flash('Username already exists', 'danger')
+        else:
+            new_staff = Staff(username=username, full_name=full_name, role=role)
+            new_staff.set_password(password)
+            db.session.add(new_staff)
+            db.session.commit()
+            flash(f'Staff account "{username}" created successfully!', 'success')
+            return redirect(url_for('staff_dashboard'))
+
+    return render_template('create_staff.html')
 # Create tables and staff accounts when the app starts
 with app.app_context():
     db.create_all()
