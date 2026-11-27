@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Create Staff{% endblock %}
+{% block content %}
+<h1>Create New Staff Account</h1>
+<p style="color: var(--muted); margin-bottom: 1.5rem;">Only Admin can create new staff.</p>
+
+<form method="POST" class="card" style="max-width: 500px;">
+    <label>Username *</label>
+    <input type="text" name="username" required placeholder="e.g. dr.sarah">
+
+    <label>Full Name *</label>
+    <input type="text" name="full_name" required placeholder="e.g. Dr. Sarah Okonkwo">
+
+    <label>Role *</label>
+    <select name="role" required>
+        <option value="Admin">Admin</option>
+        <option value="Vet">Vet</option>
+        <option value="Nurse">Nurse</option>
+        <option value="Reception">Reception</option>
+        <option value="Pharmacy">Pharmacy</option>
+        <option value="Lab">Lab</option>
+        <option value="Manager">Manager</option>
+    </select>
+
+    <label>Password *</label>
+    <input type="password" name="password" required placeholder="At least 6 characters">
+
+    <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Create Staff Account</button>
+    <a href="{{ url_for('staff_dashboard') }}" class="btn" style="margin-left: 0.5rem;">Cancel</a>
+</form>
+{% endblock %}
