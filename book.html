@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Book Appointment{% endblock %}
+{% block content %}
+<h1>Book an Appointment</h1>
+<p style="color: var(--muted); margin-bottom: 1.5rem;">Fill the form below. No account needed.</p>
+
+<form method="POST" class="card" style="max-width: 550px;">
+    <div class="grid-2">
+        <div>
+            <label>Your Full Name *</label>
+            <input type="text" name="owner_name" required>
+        </div>
+        <div>
+            <label>Phone Number *</label>
+            <input type="text" name="owner_phone" required>
+        </div>
+    </div>
+
+    <label>Email (optional)</label>
+    <input type="email" name="owner_email">
+
+    <div class="grid-2">
+        <div>
+            <label>Pet Name *</label>
+            <input type="text" name="pet_name" required>
+        </div>
+        <div>
+            <label>Pet Type</label>
+            <select name="pet_type">
+                <option value="Dog">Dog</option>
+                <option value="Cat">Cat</option>
+                <option value="Bird">Bird</option>
+                <option value="Rabbit">Rabbit</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <div>
+            <label>Preferred Date *</label>
+            <input type="date" name="appointment_date" required>
+        </div>
+        <div>
+            <label>Preferred Time *</label>
+            <select name="appointment_time" required>
+                <option value="09:00">09:00 AM</option>
+                <option value="10:00">10:00 AM</option>
+                <option value="11:00">11:00 AM</option>
+                <option value="12:00">12:00 PM</option>
+                <option value="13:00">01:00 PM</option>
+                <option value="14:00">02:00 PM</option>
+                <option value="15:00">03:00 PM</option>
+                <option value="16:00">04:00 PM</option>
+            </select>
+        </div>
+    </div>
+
+    <label>Reason for Visit</label>
+    <textarea name="reason" rows="3" placeholder="e.g. Vaccination, Check-up, Skin problem..."></textarea>
+
+    <button type="submit" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Book Appointment</button>
+</form>
+{% endblock %}
