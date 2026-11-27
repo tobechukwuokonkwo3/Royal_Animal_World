@@ -114,9 +114,14 @@
             font-size: 0.85rem;
         }
         @media (max-width: 700px) {
-            .grid-2 { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
-        }
+    .grid-2 { grid-template-columns: 1fr; }
+    .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        justify-content: flex-end;
+    }
+             }
     </style>
 </head>
 <body>
