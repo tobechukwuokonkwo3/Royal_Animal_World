@@ -134,8 +134,14 @@ def staff_logout():
 def staff_dashboard():
     patients = Patient.query.order_by(Patient.updated_at.desc()).limit(20).all()
     products = Product.query.order_by(Product.created_at.desc()).limit(10).all()
-    return render_template('staff_dashboard.html', patients=patients, products=products)
-
+    
+    today = datetime.utcnow().strftime('%Y-%m-%d')
+    today_count = Appointment.query.filter_by(appointment_date=today).count()
+    
+    return render_template('staff_dashboard.html', 
+                           patients=patients, 
+                           products=products,
+                           today_count=today_count)
 
 @app.route('/staff/patients')
 @login_required
